@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="main.css">
+        <link rel="shortcut icon" href="../favicon.ico"> 	
+   <link rel="stylesheet" href="https://unicons.iconscout.coma/release/v4.0.0/css/line.css">
+<script src="https://kit.fontawesome.com/8ca23df693.js" crossorigin="anonymous"></script>
+ <script type="text/javascript" src="js/modernizr.custom.79639.js"></script> 		
+ <noscript><link rel="stylesheet" type="text/css" href="css/noJS.css" /></noscript>
+ 
+  
+<style>
+
+    /* CSS styles */
+    :root {
+      --background-color: #f2f2f2;
+      --menu-colorbg:#e1e1e1 ;
+      --theme-color:#17c349e3;
+      --text-color: #5a5a5a;
+      --button-background-color: #17c349e3;
+      --button-text-color: #fff;
+      --table-border-color: #ccc;
+      --table-header-color: #f2f2f2;
+      --placeholder-bg: #7b7b7b0a;
+      --ep-color: #424242;
+      --eph2-color: #17c349e3;
+      --toggle-icon:crimson;
+      --active-color:#17c349e3;
+      --dropdownbg-color:#e7ebec;
+      --border-color:#e3e3e3;
+      --copy-color:#c2c2c2;
+      --blog-border:rgba(128,128,128,0.5);
+    }
+
+    /* Dark mode */
+    body.dark-mode {
+      --background-color: #171c28;
+      --theme-color:#149f3ce3;
+      --menu-colorbg:#191e2a;
+      --text-color: #cecece;
+      --button-background-color: #0056b3;
+      --table-border-color: #666;
+      --table-header-color: #444;
+      --placeholder-bg: #2d3b4d3b;
+      --ep-color: #cdcdcd;
+      --eph2-color: #00bfffbe;
+      --active-color:#0faf3d;
+      --toggle-icon:#1188b0;
+      --dropdownbg-color:#181d23;
+      --border-color:#272727;
+      --copy-color:#4c4c4c;
+      --blog-border:rgba(235,235,235,0.3);
+    }
+
+        
+            #searchResults {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Grid with 3 columns */
+            gap: 10px;
+        }
+        .postItem {
+           
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative; /* Ensure ribbon tag positioning */
+            display: none; /* Initially hide all items */
+        }
+        .postItem.show {
+            display: block; /* Show items that should be visible */
+        }
+        .postItem:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .postItem a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+        }
+        .postItem img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px 5px 0 0;
+        }
+        .postItem .title {
+            padding: 5px;
+            font-size: 0.8em;
+            color:var(--text-color);
+        }
+        .postItem .title a {
+            font-size: 0.8em;
+        }
+        .ribbon {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: hsla(109, 85%, 61%, 1);
+            background: linear-gradient(90deg, hsla(109, 85%, 61%, 1) 0%, hsla(169, 94%, 67%, 1) 100%);
+            background: -moz-linear-gradient(90deg, hsla(109, 85%, 61%, 1) 0%, hsla(169, 94%, 67%, 1) 100%);
+            background: -webkit-linear-gradient(90deg, hsla(109, 85%, 61%, 1) 0%, hsla(169, 94%, 67%, 1) 100%);
+            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#66F047", endColorstr="#5CFADD", GradientType=1);
+            color: #17800e;
+            font-size: 0.6em;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .latestPosts {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 20px 0 0 0;
+            color: var(--text-color);
+        }
+        .viewMore {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .viewMore button {
+            background-color: var(--theme-color);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .viewMore button:hover {
+            background-color: #555;
+        }
+        h2 {
+            color: lightgreen;
+        }
+        #searchInput {
+            width: calc(100% - 40px);
+            margin: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            font-size: 1em;
+        }
+
+        /* Modal Styles */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #modalContent {
+            background-color: var(--background-color);
+            padding: 20px;
+            border-radius: 5px;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #modalClose {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #f30e0e;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        #modalContent img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+        #watchNow {
+            background-color: #18c02f;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        #watchNow:hover {
+            background-color: #555;
+        }
+
+        .hoverPlay {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px; /* Adjust width */
+            height: 60px; /* Adjust height */
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+        .hoverPlay::before {
+            content: '\25B6'; /* Unicode for the play button */
+            color: rgba(34, 197, 62, 0.8);
+            font-size: 35px;
+            margin: -5px 0 0 5px;
+        }
+
+        .postItem:hover .hoverPlay {
+            display: flex;
+        }
+        
+        
+    body {
+      margin: 0;
+      padding:0 10px;
+      font-family: Arial, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      
+    }
+    
+   
+    .myheader {
+     border-bottom:1px solid var(--border-color);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background-color: var(--menu-colorbg);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000; /* Ensure header is above other content */
+    }
+
+  /* Dashboard Sidebar Styles */
+.dashboard-sidebar {
+  text-align:left;
+  top: 0;
+  position: fixed;
+  left: -250px; /* Start off-screen */
+  width: 250px;
+  height: 100%;
+  background-color: var(--background-color); /* Sidebar background color */
+  transition: left 0.3s ease; /* Smooth transition effect */
+  z-index: 999; /* Ensure sidebar appears above other content */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+}
+
+.dashboard-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top:65px;
+  margin-left:15px;
+}
+.dashboard-sidebar h4{
+  margin-bottom:7px;
+  color:var(--text-color);
+}
+.mygroup{
+  margin-top:0px!important;
+}
+li svg{
+  padding:0;
+  margin-bottom:-3px;
+}
+.dashboard-sidebar ul li {
+  padding: 10px;
+  color: var(--text-color); /* Text color */
+}
+.dashboard-sidebar ul li:hover {
+  background-color: var(--placeholder-bg); 
+  border-right:3px solid var(--theme-color);
+
+  
+}
+
+/* Menu Button Bar */
+.menu-btn-bar {
+  position: absolute;
+  left: 14px;
+  top: 15px;
+  z-index: 9999999; /* Ensure it appears above other elements */
+}
+.menu-btn-bar svg{
+  position: absolute;
+  top:-3px;
+}
+.menu-btn-bar img{
+  width:23px;
+  display:inline-block!important;
+  height:100%;
+  margin-left:31px;
+  z-index:999999999;
+}
+.menu-btn-bar h4{
+  position: absolute;
+  top:-23px;
+  color:#1ec963;
+  left:57px;
+  font-size:18px;
+}
+/* Style for the menu button */
+#menuButton {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Blur effect for the content when sidebar is open */
+.blur-content {
+  transition: filter 0.3s ease; /* Smooth transition effect */
+}
+
+.blur-effect {
+  filter: blur(3px); /* Add blur effect */
+}
+  .top-search{
+  width: 47%!important;
+   height:28px;
+    position: absolute;
+     padding: 8px;
+    right: 80px;
+    top:5px;
+    border-radius: 8px;
+    color:var(--text-color);
+   background-color: var(--placeholder-bg);
+   outline:none;
+  }
+  
+/* Search button */
+.search-icon {
+  position:absolute;
+  top:17px;
+  right:85px;
+  cursor: pointer;
+  font-size: 17px;
+  color: grey;
+  transition: color 0.3s ease;
+}
+
+.search-icon:hover {
+  color: #666;
+}
+
+/* Search bar */
+.search-bar {
+  height:17px; 
+  border-radius: 5px;
+  border:none;
+  display: flex;
+  align-items: center;
+  width: 0;
+  Outline:none;
+  padding: 10px 0 0 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: width 0.3s ease, padding 0.3s ease, opacity 0.3s ease, right 0.3s ease; /* Include right property */
+  position: absolute; /* Position absolutely */
+  top: 11px; /* Adjust as needed */
+  right: 80px; /* Position at the right side */
+}
+
+.search-bar.active {
+  width: 165px; /* Adjust width as needed */
+  opacity: 1;
+  outline: none;
+  border-radius: 5px;
+  background-color: var(--placeholder-bgplace);
+  border:1px solid #84848476;
+}
+
+
+    .toggle-theme{
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      margin-right: 30px; /* Add margin to the right of the button */
+    }
+    .toggle-theme i {
+      margin-right: 20px;
+    }
+  .fa-adjust{
+    color:var(--toggle-icon);
+  }
+    .bottom-menu {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+     border-top:1px solid var(--border-color);
+      background-color: var(--menu-colorbg);
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000; /* Ensure bottom menu is above other content */
+    }
+
+    .bottom-menu button {
+      border: none;
+      outline:none;
+      background-color: transparent;
+      color:var(--text-color);
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: color 0.3s, opacity 0.3s;
+    }
+
+    .bottom-menu button i {
+      margin-bottom: 5px;
+    }
+
+    .bottom-menu button:hover {
+      color: var(--theme-hover-color); /* Change to your desired hover color */
+    }
+
+    .bottom-menu button.active {
+      color: var(--active-color); /* Change to your desired active color */
+    
+      
+  }
+
+    .content {
+      margin-top: 50px; /* Adjust this value to prevent content from being hidden behind the header */
+      margin-bottom: 60px; /* Adjust this value to prevent content from being hidden behind the bottom menu */
+    }
+
+ select{
+    outline:none!important;
+  }
+
+.dark-mode #dropdown {
+  color: #fff; /* Set text color to white */
+  
+}
+  .container {
+    max-width: 50%;
+color: var(--text-color);
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+  }
+.myinputs{
+  margin:20px;
+  text-align: center; 
+  
+}
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-sizing: border-box;
+    color:var(--text-color);
+   background-color: var(--placeholder-bg);
+   outline:none;
+  }
+  #synopsisInput3{
+  height:100px;
+  overflow:auto;
+}
+  #copyBtn, #generateBtn, #copyBtn3, #generateBtn3, #addEpisodeBtn{
+    display: block;
+    margin:15px auto;
+   border-radius:8px;
+   Outline:none;
+   z-index:999;
+  padding: 10px 20px;
+  border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+   background-color: var(--placeholder-bg);
+    color: green;
+    border: none;
+    cursor: pointer;
+  }
+.removeBtn{
+  display: block;
+   margin:0px auto 10px auto;
+   border-radius:8px;
+   Outline:none;
+   z-index:999;
+  padding: 5px 10px;
+   border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+   background-color: var(--placeholder-bg);
+    color: green;
+    border: none;
+    cursor: pointer;
+}
+#generateBtn, #generateBtn3{
+  margin-bottom:-30px;
+}
+  #copyBtn3, #copyBtn{
+    position:relative;
+    bottom:-46px;
+    left:122px;
+    padding:5px 10px;
+    
+    
+  }
+  h2{
+    color:var(--text-color)!important;
+    }
+
+  textarea {
+    height:100px;
+    padding:10px;
+    overflow:auto;
+   width:93%;
+    margin: 10px auto; /* Center the textarea */
+    border-radius: 8px;
+    border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    resize: vertical;
+    display: block;
+    color:var(--text-color);
+    background-color: var(--placeholder-bg);
+    outline:none;
+  }
+
+
+  .dark-mode-label,
+  .light-mode-label {
+    font-size: 14px;
+    margin-right: 10px;
+  }
+/* Light mode */
+input:focus {
+  outline-color: var(--theme-color)!important; /* Outline color when input is focused */
+}
+
+/* Dark mode */
+.dark-mode input:focus {
+  outline-color: var(--theme-color)!important; /* Outline color when input is focused in dark mode */
+}
+/* Light mode */
+textarea:focus {
+  outline-color: var(--theme-color)!important; /* Outline color when textarea is focused */
+}
+
+/* Dark mode */
+.dark-mode textarea:focus {
+  outline-color: var(--theme-color)!important; /* Outline color when textarea is focused in dark mode */
+}
+/* Placeholder text color */
+  ::placeholder {
+    opacity:0.7;
+    color: var(--placeholder-color-light); /* Default placeholder color */
+  }
+
+  /* Dark mode placeholder color */
+  body.dark-mode ::placeholder {
+    opacity:0.7;
+    color: var(--placeholder-color-dark); /* Placeholder color in dark mode */
+  }
+  
+.dropdown {
+  position: relative;
+  display: inline-block;
+   float:left!important;
+  margin:20px 0 10px 0;
+}
+
+.dropbtn {
+  border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+   background-color: var(--placeholder-bg);
+    color: green;
+  margin-left:20px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+   background-color: var(--dropdownbg-color);
+    color: green!important;
+  opacity:1;
+  min-width: 160px;
+margin:10px 0 10 20px;
+border-radius: 8px;
+  
+  z-index: 1;
+}
+
+.dropdown-content button {
+  border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+   background-color: var(--placeholder-bg);
+   color:grey;
+  border:none;
+  font-family: Sans-Serif!important;
+  padding: 6px 10px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-radius:8px;
+  background: none;
+}
+
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-content button:first-child {
+  display: block;
+}
+.show {
+  display: block;
+}
+   .form-container{
+     text-align:left;
+  }
+        .code-form {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-color)
+            justify-content: center;
+            align-items: center;
+        }
+        .code-form .form-container {
+            background-color: var(--background-color);
+            padding: 20px;
+            width: 100%;
+            height:100%;
+            max-width: 600px;
+        }
+        .code-form label {
+            font-weight: bold;
+          
+        }
+        .code-form input[type="text"], 
+        .code-form textarea {
+            width: 100%;
+            padding: 10px;
+           background-color: var(--placeholder-bg);
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            word-wrap: break-word; 
+        }
+        .code-form textarea {
+            background-color: var(--placeholder-bg);
+            height: 400px;
+            width:100%;
+        }
+        .code-form button {
+            padding: 10px 20px;
+            background-color: var(--theme-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .code-form .copy-anchor {
+            padding: 2px 5px;
+            background-color:#1c77ef2b;
+            color: #1c77ef;
+            border: none;
+            border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size:12px;
+        }
+        
+        .code-form button:hover {
+            background-color: var(--theme-color);
+        }
+        .add-code-btn {
+          z-index:99999999;
+            position: fixed;
+            bottom:75px;
+            right:30px;
+            background: transparent;
+            border:none;
+            outline: none;
+            color:var(--theme-color);
+            font-size:50px;
+        }
+  #savedCodeBlocks{
+    padding-top:20px;
+    text-align:left;
+  }
+  
+   .code-block {
+            border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            border-radius: 5px;
+            padding: 0px 10px 20px 10px;
+            margin-bottom: 10px;
+            max-width: 100%;
+            max-height: 250px;
+          color:var(--text-color);
+            position: relative;
+        }
+  
+ .code-block h3{
+   color:var(--text-color);
+   margin:8px 0;
+  }
+       .copy-btn, .edit-btn,
+        .delete-btn {
+            display: inline-block;
+            margin: 10px 5px 0px 5px;
+            padding: 5px;
+            background-color: #007bff1b;
+            color:#007bff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            border: 1px solid rgba(235,235,235,0.1);
+box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        }
+        .delete-btn {
+          color:#dc3545;
+            background-color: #dc354513;
+        }
+     .copy-btn{
+       color:#e96619;
+       background-color: #e9661919;
+     }
+     .savecode{
+       border: 1px solid var(--blog-border);
+box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+       color:var(--theme-color)!important;
+       background-color: #16bb1626!important;
+     }
+pre{
+  border: 1px solid rgba(235,235,235,0.1);
+   background-color: var(--placeholder-bg);
+  width:97%;
+  padding:5px;
+  word-wrap: break-word!important; 
+  overflow:auto;
+  height:auto;
+  min-height:50px;
+  max-height:150px;
+  border-radius:8px;
+  
+}
+
+ 
+
+    .head-tag {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 30px 10px 20px 10px;
+      
+     
+    }
+  .head-tag h4{
+     color:var(--text-color)!important;
+     font-size:15px;
+  }
+
+   
+  
+      .slider {
+            width: 100%;
+            margin-top: 70px; /* Add margin at the top */
+            overflow-x: auto !important; /* Ensure horizontal scrolling */
+            white-space: nowrap; /* Prevent line breaks */
+        }
+        .slider img {
+            width:80%;
+            height: 160px;
+            border-radius: 5px;
+            margin-right: 10px;
+            object-fit: cover; /* Ensure images cover their container */
+        }
+  
+   
+</style>
+</head>
+<body>
+  
+  <header class="myheader">
+
+<!-- Dashboard Sidebar -->
+<div class="dashboard-sidebar" id="dashboardSidebar">
+  <ul>
+    <h4>DASHBOARD</h4>
+    <li> <svg fill="#0058db" width="14px" height="14px" viewBox="0 0 512.00 512.00" id="_x30_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke="#2174f1" stroke-width="0.00512"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M418.275,146h-46.667 c-5.365-22.513-12.324-43.213-20.587-61.514c15.786,8.776,30.449,19.797,43.572,32.921C403.463,126.277,411.367,135.854,418.275,146 z M452,256c0,17.108-2.191,33.877-6.414,50h-64.034c1.601-16.172,2.448-32.887,2.448-50s-0.847-33.828-2.448-50h64.034 C449.809,222.123,452,238.892,452,256z M256,452c-5.2,0-21.048-10.221-36.844-41.813c-6.543-13.087-12.158-27.994-16.752-44.187 h107.191c-4.594,16.192-10.208,31.1-16.752,44.187C277.048,441.779,261.2,452,256,452z M190.813,306 c-1.847-16.247-2.813-33.029-2.813-50s0.966-33.753,2.813-50h130.374c1.847,16.247,2.813,33.029,2.813,50s-0.966,33.753-2.813,50 H190.813z M60,256c0-17.108,2.191-33.877,6.414-50h64.034c-1.601,16.172-2.448,32.887-2.448,50s0.847,33.828,2.448,50H66.414 C62.191,289.877,60,273.108,60,256z M256,60c5.2,0,21.048,10.221,36.844,41.813c6.543,13.087,12.158,27.994,16.752,44.187H202.404 c4.594-16.192,10.208-31.1,16.752-44.187C234.952,70.221,250.8,60,256,60z M160.979,84.486c-8.264,18.301-15.222,39-20.587,61.514 H93.725c6.909-10.146,14.812-19.723,23.682-28.593C130.531,104.283,145.193,93.262,160.979,84.486z M93.725,366h46.667 c5.365,22.513,12.324,43.213,20.587,61.514c-15.786-8.776-30.449-19.797-43.572-32.921C108.537,385.723,100.633,376.146,93.725,366z M351.021,427.514c8.264-18.301,15.222-39,20.587-61.514h46.667c-6.909,10.146-14.812,19.723-23.682,28.593 C381.469,407.717,366.807,418.738,351.021,427.514z"></path></g></svg> ABEFILM Website</li>
+    <li><svg width="20px" height="20px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5915 3.88444C13.6002 3.32107 14.7626 3 16 3C17.2374 3 18.3998 3.32107 19.4085 3.88444L20.1464 3.14645C20.3417 2.95118 20.6583 2.95118 20.8536 3.14645C21.0488 3.34171 21.0488 3.65829 20.8536 3.85355L20.2612 4.44595C21.9266 5.72558 23 7.73743 23 10H9C9 7.73743 10.0734 5.72558 11.7388 4.44595L11.1464 3.85355C10.9512 3.65829 10.9512 3.34171 11.1464 3.14645C11.3417 2.95118 11.6583 2.95118 11.8536 3.14645L12.5915 3.88444ZM14 7C14 7.55228 13.5523 8 13 8C12.4477 8 12 7.55228 12 7C12 6.44772 12.4477 6 13 6C13.5523 6 14 6.44772 14 7ZM19 8C19.5523 8 20 7.55228 20 7C20 6.44772 19.5523 6 19 6C18.4477 6 18 6.44772 18 7C18 7.55228 18.4477 8 19 8Z" fill="#87C527"></path> <path d="M5 12.5C5 11.6716 5.67157 11 6.5 11C7.32843 11 8 11.6716 8 12.5V18.5C8 19.3284 7.32843 20 6.5 20C5.67157 20 5 19.3284 5 18.5V12.5Z" fill="#87C527"></path> <path d="M12 24V27.5C12 28.3284 12.6716 29 13.5 29C14.3284 29 15 28.3284 15 27.5V24H17V27.5C17 28.3284 17.6716 29 18.5 29C19.3284 29 20 28.3284 20 27.5V24H21C22.1046 24 23 23.1046 23 22V11H9V22C9 23.1046 9.89543 24 11 24H12Z" fill="#87C527"></path> <path d="M24 12.5C24 11.6716 24.6716 11 25.5 11C26.3284 11 27 11.6716 27 12.5V18.5C27 19.3284 26.3284 20 25.5 20C24.6716 20 24 19.3284 24 18.5V12.5Z" fill="#87C527"></path> </g></svg> ABEFILM Mobile App</li>
+    <li><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.58 19.37L17.59 11.01C17.38 10.46 16.91 10.12 16.37 10.12C15.83 10.12 15.37 10.46 15.14 11.03L12.16 19.37C12.02 19.76 12.22 20.19 12.61 20.33C13 20.47 13.43 20.27 13.57 19.88L14.19 18.15H18.54L19.16 19.88C19.27 20.19 19.56 20.38 19.87 20.38C19.95 20.38 20.04 20.37 20.12 20.34C20.51 20.2 20.71 19.77 20.57 19.38L20.58 19.37ZM14.74 16.64L16.38 12.05L18.02 16.64H14.74ZM12.19 7.85C9.92999 11.42 7.89 13.58 5.41 15.02C5.29 15.09 5.16 15.12 5.04 15.12C4.78 15.12 4.53 14.99 4.39 14.75C4.18 14.39 4.3 13.93 4.66 13.73C6.75999 12.51 8.48 10.76 10.41 7.86H4.12C3.71 7.86 3.37 7.52 3.37 7.11C3.37 6.7 3.71 6.36 4.12 6.36H7.87V4.38C7.87 3.97 8.21 3.63 8.62 3.63C9.02999 3.63 9.37 3.97 9.37 4.38V6.36H13.12C13.53 6.36 13.87 6.7 13.87 7.11C13.87 7.52 13.53 7.86 13.12 7.86H12.18L12.19 7.85ZM12.23 15.12C12.1 15.12 11.97 15.09 11.85 15.02C11.2 14.64 10.57 14.22 9.97999 13.78C9.64999 13.53 9.58 13.06 9.83 12.73C10.08 12.4 10.55 12.33 10.88 12.58C11.42 12.99 12.01 13.37 12.61 13.72C12.97 13.93 13.09 14.39 12.88 14.75C12.74 14.99 12.49 15.12 12.23 15.12Z" fill="#e09224"></path> </g></svg> Korean Language</li>
+  </ul>
+  <ul class="mygroup">
+    <h4>OUR SOCIALS</h4>
+    <li><svg width="18px" height="18px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="16" cy="16" r="14" fill="url(#paint0_linear_87_7208)"></circle> <path d="M21.2137 20.2816L21.8356 16.3301H17.9452V13.767C17.9452 12.6857 18.4877 11.6311 20.2302 11.6311H22V8.26699C22 8.26699 20.3945 8 18.8603 8C15.6548 8 13.5617 9.89294 13.5617 13.3184V16.3301H10V20.2816H13.5617V29.8345C14.2767 29.944 15.0082 30 15.7534 30C16.4986 30 17.2302 29.944 17.9452 29.8345V20.2816H21.2137Z" fill="white"></path> <defs> <linearGradient id="paint0_linear_87_7208" x1="16" y1="2" x2="16" y2="29.917" gradientUnits="userSpaceOnUse"> <stop stop-color="#18ACFE"></stop> <stop offset="1" stop-color="#0163E0"></stop> </linearGradient> </defs> </g></svg> Facebook Group</li>
+    <li><svg width="18px" height="18px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="16" cy="16" r="14" fill="url(#paint0_linear_87_7225)"></circle> <path d="M22.9866 10.2088C23.1112 9.40332 22.3454 8.76755 21.6292 9.082L7.36482 15.3448C6.85123 15.5703 6.8888 16.3483 7.42147 16.5179L10.3631 17.4547C10.9246 17.6335 11.5325 17.541 12.0228 17.2023L18.655 12.6203C18.855 12.4821 19.073 12.7665 18.9021 12.9426L14.1281 17.8646C13.665 18.3421 13.7569 19.1512 14.314 19.5005L19.659 22.8523C20.2585 23.2282 21.0297 22.8506 21.1418 22.1261L22.9866 10.2088Z" fill="white"></path> <defs> <linearGradient id="paint0_linear_87_7225" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse"> <stop stop-color="#37BBFE"></stop> <stop offset="1" stop-color="#007DBB"></stop> </linearGradient> </defs> </g></svg> Telegram Channel</li>
+  </ul>
+</div>
+<!-- Menu Button Bar -->
+<div class="menu-btn-bar">
+  <svg id="menuButton" width="28px" height="28px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Menu / Menu_Alt_05"> <path id="Vector" d="M5 17H13M5 12H19M11 7H19" stroke="#7a7a7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+ 
+  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhbuTgeQYyTprj6uHYZsQJrWnftQv9oM6yDjThwbNLM4z6F169nYbmu78trB5yYfyppx7cGZjRIkcybwx7wU9ZEVL9GIXQK5D4V0tj2EGTK2KvrMwbZFrmhvfWQSqeMK3e8JcyUnuSYvzboweoiQwyjkB_R2_JAviIDwbUDd3ff_c_yQWIMH0OUo_zWZ4M/s64/play%20%282%29.png" alt="">
+   <h4>ABEFILM </h4>
+</div>
+<!-- Content (to be blurred when sidebar is open) -->
+<div id="content">
+  <!-- Your content goes here -->
+</div>
+    
+<div id="searchIcon" class="search-icon">
+  <i class="fas fa-search"></i>
+</div>
+<div id="searchBar" class="search-bar">
+  <input type="text" id="searchInput" placeholder="Search...">
+</div>
+    
+<div class="toggle-theme" onclick="toggleDarkMode()">
+<svg id="light-icon" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18 12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12Z" fill="#1C274C"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V3C12.75 3.41421 12.4142 3.75 12 3.75C11.5858 3.75 11.25 3.41421 11.25 3V2C11.25 1.58579 11.5858 1.25 12 1.25ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H3C3.41421 11.25 3.75 11.5858 3.75 12C3.75 12.4142 3.41421 12.75 3 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM20.25 12C20.25 11.5858 20.5858 11.25 21 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H21C20.5858 12.75 20.25 12.4142 20.25 12ZM12 20.25C12.4142 20.25 12.75 20.5858 12.75 21V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V21C11.25 20.5858 11.5858 20.25 12 20.25Z" fill="#1C274C"></path> <g opacity="0.5"> <path d="M4.39838 4.39838C4.69127 4.10549 5.16615 4.10549 5.45904 4.39838L5.85188 4.79122C6.14477 5.08411 6.14477 5.55898 5.85188 5.85188C5.55898 6.14477 5.08411 6.14477 4.79122 5.85188L4.39838 5.45904C4.10549 5.16615 4.10549 4.69127 4.39838 4.39838Z" fill="#1C274C"></path> <path d="M19.6009 4.39864C19.8938 4.69153 19.8938 5.16641 19.6009 5.4593L19.2081 5.85214C18.9152 6.14503 18.4403 6.14503 18.1474 5.85214C17.8545 5.55924 17.8545 5.08437 18.1474 4.79148L18.5402 4.39864C18.8331 4.10575 19.308 4.10575 19.6009 4.39864Z" fill="#1C274C"></path> <path d="M18.1474 18.1474C18.4403 17.8545 18.9152 17.8545 19.2081 18.1474L19.6009 18.5402C19.8938 18.8331 19.8938 19.308 19.6009 19.6009C19.308 19.8938 18.8331 19.8938 18.5402 19.6009L18.1474 19.2081C17.8545 18.9152 17.8545 18.4403 18.1474 18.1474Z" fill="#1C274C"></path> <path d="M5.85188 18.1477C6.14477 18.4406 6.14477 18.9154 5.85188 19.2083L5.45904 19.6012C5.16615 19.8941 4.69127 19.8941 4.39838 19.6012C4.10549 19.3083 4.10549 18.8334 4.39838 18.5405L4.79122 18.1477C5.08411 17.8548 5.55898 17.8548 5.85188 18.1477Z" fill="#1C274C"></path> </g> </g></svg>
+
+<svg id="dark-icon" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19.9001 2.30719C19.7392 1.8976 19.1616 1.8976 19.0007 2.30719L18.5703 3.40247C18.5212 3.52752 18.4226 3.62651 18.298 3.67583L17.2067 4.1078C16.7986 4.26934 16.7986 4.849 17.2067 5.01054L18.298 5.44252C18.4226 5.49184 18.5212 5.59082 18.5703 5.71587L19.0007 6.81115C19.1616 7.22074 19.7392 7.22074 19.9001 6.81116L20.3305 5.71587C20.3796 5.59082 20.4782 5.49184 20.6028 5.44252L21.6941 5.01054C22.1022 4.849 22.1022 4.26934 21.6941 4.1078L20.6028 3.67583C20.4782 3.62651 20.3796 3.52752 20.3305 3.40247L19.9001 2.30719Z" fill="#ffffff"></path> <path d="M16.0328 8.12967C15.8718 7.72009 15.2943 7.72009 15.1333 8.12967L14.9764 8.52902C14.9273 8.65407 14.8287 8.75305 14.7041 8.80237L14.3062 8.95987C13.8981 9.12141 13.8981 9.70107 14.3062 9.86261L14.7041 10.0201C14.8287 10.0694 14.9273 10.1684 14.9764 10.2935L15.1333 10.6928C15.2943 11.1024 15.8718 11.1024 16.0328 10.6928L16.1897 10.2935C16.2388 10.1684 16.3374 10.0694 16.462 10.0201L16.8599 9.86261C17.268 9.70107 17.268 9.12141 16.8599 8.95987L16.462 8.80237C16.3374 8.75305 16.2388 8.65407 16.1897 8.52902L16.0328 8.12967Z" fill="#ffffff"></path> <path opacity="0.5" d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#ffffff"></path> </g></svg>
+</div>
+  </header>
+   <div class="bottom-menu">
+  <button onclick="showContent('home')" class="active">
+<i class="fas fa-home"></i>
+ Home</button>
+  <button onclick="showContent('codes')">
+<i class="fas fa-code"></i>
+ Post Code</button>
+  <button onclick="showContent('tools')">
+<i class="fas fa-pen"></i>
+ Notes</button>
+</div>
+
+<div class="content" id="home">
+
+  <div class="free-space"></div>
+  <div class="slider">
+    <div class="slider-container">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTDpAZBVy6WjoloT-fD0kaQ-H_5-in6ZrBoxnbKbhVNrouZYVvXlcxgNIiEDgBx_ENhwrDmJtLHpQPQU8v6e9bENNUqO_xYrCw4Hw73HUy19q2-32m8rhMxLZGNZp7R0GSxgQfwwV0NVkxNC4n4LW7FlJ4ptg9E6F-urXuiwVqZPq9_vuwXzs5ys3x3jg/s2828/Picsart_24-06-02_11-56-00-388.jpg" alt="Slider Image 1">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjNpE1Qlnb7HwuZ9jw8IoOE9PfDtruFMtsfZcGM8Oi4JiIMGipga4tfiT5gdI00JxOgjrmZsKugG3D_4xgpffp_5fxCSXcz25ZprE76fvOyZTXflthf72tJ-_PHiF3gHztH3YqTZx-_LDUfbUf2oR74XL4C0u1Qvo7HjdWNeCaApPkTknLqHmJmqQyr9GA/s320/Picsart_24-06-02_12-37-40-243.jpg" alt="Slider Image 2">
+        <img src="https://img.youtube.com/vi/PfgF-ElJhVc/maxresdefault.jpg" alt="Slider Image 3">
+    </div>
+</div>
+
+<section>
+
+     <div class="latestPosts">Latest Posts</div>
+
+    <div id="searchResults"></div>
+    <div class="viewMore">
+        <button onclick="loadMorePosts()">View More</button>
+    </div>
+  <br>
+    <!-- Modal for displaying post content -->
+    <div id="modal">
+        <button id="modalClose" onclick="closeModal()">&times;</button>
+        <div id="modalContent"></div>
+    </div>
+
+    <script>
+        const apiKey = 'AIzaSyD3MEY4fPjDov7OmJ8KNpkofNSjhPD3kko';
+        const blogId = '3434317895581666633';
+        const maxResults = 50; // Fetching more posts initially for flexibility
+        let allPosts = []; // To store all fetched posts
+
+        function fetchAllPosts() {
+            const url = `https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts?key=${apiKey}&maxResults=${maxResults}`;
+
+            return fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    allPosts = data.items;
+                    renderPosts(allPosts);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        function getFirstImage(content) {
+            const div = document.createElement('div');
+            div.innerHTML = content;
+            const img = div.querySelector('img');
+            return img ? img.src : '';
+        }
+
+        function renderPosts(items) {
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = ''; // Clear previous results
+
+            items.forEach((item, index) => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('postItem');
+                if (index < 20) {
+                    postElement.classList.add('show'); // Show only the first 20 items initially
+                }
+
+                postElement.innerHTML = `
+                    <div>
+                        <img src="${getFirstImage(item.content)}" alt="Thumbnail">
+                        <div class="title">${item.title}</div>
+                        <div class="hoverPlay"></div> <!-- Play button -->
+                    </div>
+                `;
+
+                // Check if there are labels to display as ribbon
+                if (item.labels && item.labels.length > 0) {
+                    const ribbon = document.createElement('div');
+                    ribbon.classList.add('ribbon');
+                    ribbon.textContent = item.labels[0]; // Show only the first label
+                    postElement.appendChild(ribbon);
+                }
+
+                postElement.addEventListener('click', () => {
+                    setTimeout(() => openModal(item), 500); // Delay opening the modal by 500ms
+                });
+
+                resultsContainer.appendChild(postElement);
+            });
+        }
+
+        function loadMorePosts() {
+            const allPostItems = document.querySelectorAll('.postItem');
+            allPostItems.forEach((item, index) => {
+                if (index >= 20) {
+                    item.classList.add('show'); // Show items beyond the initial 20 when "View More" is clicked
+                }
+            });
+        }
+
+        function filterPosts(query) {
+            const filteredPosts = allPosts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
+            renderPosts(filteredPosts);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (event) => {
+            const query = event.target.value;
+            filterPosts(query);
+        });
+
+        function openModal(post) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+
+            const div = document.createElement('div');
+            div.innerHTML = post.content;
+            const images = div.querySelectorAll('img');
+            const iframes = div.querySelectorAll('iframe');
+            const watchBtns = div.querySelectorAll('.watchbtn');
+            const epiLinks = div.querySelectorAll('a.epi'); // Select all <a> elements with class 'epi'
+
+            images.forEach(img => img.remove());
+            iframes.forEach(iframe => iframe.remove());
+            watchBtns.forEach(btn => btn.remove());
+            epiLinks.forEach(link => link.remove()); // Remove all <a> elements with class 'epi'
+
+            const firstImageSrc = getFirstImage(post.content);
+
+            modalContent.innerHTML = `
+                <h2>${post.title}</h2>
+                <img src="${firstImageSrc}" alt="Thumbnail">
+                <div>${div.innerHTML}</div>
+                <a id="watchNow" href="${post.url}" target="_blank">Watch Now</a>
+            `;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        }
+
+        // Initial load of all posts when the page loads
+        fetchAllPosts();
+    </script>
+
+ 
+</section>
+  </div>
+<div class="content" id="codes" style="display: none;">
+<div class="dropdown">
+  <button onclick="toggleDropdown()" class="dropbtn" id="dropdownTitle"><i class="fas fa-tv">Series Code </i>
+</button>
+  <div id="myDropdown" class="dropdown-content">
+    <button id="movieOption" onclick="selectOption('movieCode')" style="display: none;"><i class="fas fa-film"> Movie Code </i>
+</button>
+    <button id="postOption" onclick="selectOption('seriesCode')"> <i class="fas fa-tv"> Series Code </i>
+</button>
+    
+  </div>
+</div>
+<div id="seriesCode" class="tabcontent">
+  <!-- Content for Series Code -->
+   <div class="myinputs">
+     <input type="text" id="seriesThumbnailInput3" placeholder="Enter Thumbnail Link">
+  <label for="synopsisInput"></label>
+  <textarea id="synopsisInput3" placeholder="Enter Synopsis"></textarea>
+        <input type="text" id="castsInput3" placeholder="Enter Cast(s)">
+        
+        <input type="text" id="directorInput3" placeholder="Enter Director(s)">
+        <input type="text" id="releaseInput3" placeholder="Enter Release Date">
+        <input type="text" id="countryInput3" placeholder="Enter Country">
+        
+        <div id="episodes">
+            <div class="episode">
+                <input type="text" class="episodeInput" placeholder="Enter Episode 1" style="removeBtn:display:none!important;">
+                <button class="removeBtn">Remove</button>
+            </div>
+        </div>
+        
+        <button id="addEpisodeBtn">Add Episode</button>
+        <button id="generateBtn3">Generate Code</button>
+       <button id="copyBtn3">Copy</button>
+        <textarea id="codeOutput3" readonly></textarea>
+
+     <div class="free-space"></div>
+     
+    </div>
+</div>
+<div id="movieCode" class="tabcontent">
+  <!-- Content for Movie Code -->
+     <div class="myinputs">
+ <label for="thumbnailInput"></label>
+  <input type="text" id="thumbnailInput" placeholder="Enter Thumbnail Link">
+  
+  <label for="iframeInput"></label>
+  <input type="text" id="iframeInput" placeholder="Enter IFrame Embed Link">
+ 
+  <label for="synopsisInput"></label>
+  <textarea id="synopsisInput" placeholder="Synopsis"></textarea>
+  
+  <label for="castsInput"></label>
+  <input type="text" id="castsInput" placeholder="Enter Cast(s)">
+  
+  <label for="directorInput"></label>
+  <input type="text" id="directorInput" placeholder="Enter Director(s)">
+  
+  <label for="releaseInput"></label>
+  <input type="text" id="releaseInput" placeholder="Enter Release Date">
+  
+  <label for="countryInput"></label>
+  <input type="text" id="countryInput" placeholder="Enter Country">
+  
+  
+  <button id="generateBtn">Generate Code</button>
+  <button id="copyBtn">Copy</button>
+  <textarea id="codeOutput" rows="10"></textarea>
+ 
+      <div class="free-space"></div> 
+</div>
+</div>
+  </div>
+<div class="content" id="tools" style="display: none;">
+     <button class="add-code-btn" onclick="openCodeForm()">+</button>
+    <div class="code-form" id="codeForm">
+        <div class="form-container">
+          <br>
+            <label for="codeTitle">Title:</label>
+            <input type="text" id="codeTitle" placeholder="Enter Title">
+            <label for="codeContent">Code:</label>  <button class="copy-anchor" onclick="copyText()"> Episode Code</button>
+            <textarea id="codeContent" placeholder="Enter Post Code"></textarea>
+            <button class="savecode" onclick="saveCodeBlock()">Save Code</button>
+        </div>
+    </div>
+    <div id="savedCodeBlocks">
+        <!-- Display saved code blocks here -->
+    </div>
+</div>
+  
+<script>
+
+// JavaScript
+    function showContent(page) {
+      // Hide all content divs
+      var contentDivs = document.querySelectorAll('.content');
+      contentDivs.forEach(function(div) {
+        div.style.display = 'none';
+      });
+
+
+// Deactivate all buttons
+      var menuButtons = document.querySelectorAll('.bottom-menu button');
+      menuButtons.forEach(function(button) {
+        button.classList.remove('active');
+      });
+
+      // Show the selected content div
+      document.getElementById(page).style.display = 'block';
+
+      // Activate the clicked button
+      event.currentTarget.classList.add('active');
+    }
+// Add event listener for the new Series Code button
+var seriesCodeBtn = document.querySelector('.bottom-menu button:last-child');
+seriesCodeBtn.addEventListener('click', function() {
+  showContent('tools');
+});
+
+// Function to show content based on selected option
+function showContent(page) {
+  var allContents = document.querySelectorAll('.content');
+  allContents.forEach(function(content) {
+    content.style.display = 'none';
+  });
+  document.getElementById(page).style.display = 'block';
+  updateActiveButton(page); // Update active button
+}
+// Function to show content based on selected option
+function showContent(page) {
+  console.log('showContent called with page:', page); // Debugging statement
+  var allContents = document.querySelectorAll('.content');
+  allContents.forEach(function(content) {
+    content.style.display = 'none';
+  });
+  document.getElementById(page).style.display = 'block';
+  updateActiveButton(page); // Update active button
+}
+
+// Function to update active button style
+function updateActiveButton(selectedPage) {
+  var allButtons = document.querySelectorAll('.bottom-menu button');
+  allButtons.forEach(function(button) {
+    if (button.getAttribute('onclick').includes(selectedPage)) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
+  });
+}
+
+    
+const lightIcon = document.getElementById("dark-icon");
+const darkIcon = document.getElementById("light-icon");
+// Check if dark mode is preferred
+const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+let darkMode = darkModeMediaQuery.matches;
+
+// Set dark-mode class on body if darkMode is true and pick icon
+if (darkMode) {
+  document.body.classList.add("dark-mode");
+  darkIcon.style.display = "none";
+} else {
+  lightIcon.style.display = "none";
+}
+// Toggle dark mode on button click
+function toggleDarkMode() {
+  // Toggle darkMode variable
+  darkMode = !darkMode;
+
+  // Toggle dark-mode class on body
+  document.body.classList.toggle("dark-mode");
+
+  // Toggle light and dark icons
+  if (darkMode) {
+    lightIcon.style.display = "block";
+    darkIcon.style.display = "none";
+  } else {
+    lightIcon.style.display = "none";
+    darkIcon.style.display = "block";
+  }
+}
+
+
+// JavaScript for Series Generator
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById('generateBtn').addEventListener('click', function() {
+    var thumbnailLink = document.getElementById('thumbnailInput').value;
+    var iframeLink = document.getElementById('iframeInput').value;
+    var synopsis = document.getElementById('synopsisInput').value;
+    var casts = document.getElementById('castsInput').value;
+    var director = document.getElementById('directorInput').value;
+    var release = document.getElementById('releaseInput').value;
+    var country = document.getElementById('countryInput').value;
+    
+    var tableCode = '<table class="blueTable">\n<tbody>\n';
+    tableCode += '<tr>\n<td>Casts:</td>\n<td>' + casts + '</td>\n</tr>\n';
+    tableCode += '<tr>\n<td>Director:</td>\n<td>' + director + '</td>\n</tr>\n';
+    tableCode += '<tr>\n<td>Release:</td>\n<td>' + release + '</td>\n</tr>\n';
+    tableCode += '<tr>\n<td>Country:</td>\n<td>' + country + '</td>\n</tr>\n';
+    tableCode += '</tbody>\n</table>';
+    
+ var generatedCode = '<html>\n' +
+    '<img src="' + thumbnailLink + '"/>\n' +
+    '<iframe id="fullscreen-Button" class="lazyload" data-src="' + iframeLink + '" src="' + iframeLink + '" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>\n' +
+    '<p>' + synopsis + '</p>\n' +
+    tableCode + '\n\n' +
+    '</html>'; // Add line break and spacing here
+
+    document.getElementById('codeOutput').value = generatedCode;
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function() {
+    var codeOutput = document.getElementById('codeOutput');
+    codeOutput.select();
+    document.execCommand('copy');
+    alert('Code copied to clipboard!');
+  });
+});
+
+ var iframeCode ='<iframe class="lazyload" data-src="/" src="/" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>';
+ 
+document.getElementById('addEpisodeBtn').addEventListener('click', function() {
+    var episodesDiv = document.getElementById('episodes');
+    var episodeDiv = document.createElement('div');
+    episodeDiv.classList.add('episode');
+    
+    var episodeCount = document.querySelectorAll('.episode').length + 1;
+    
+    var episodeInput = document.createElement('input');
+    episodeInput.type = 'text';
+    episodeInput.classList.add('episodeInput');
+    episodeInput.placeholder = 'Enter Episode ' + episodeCount;
+    
+    var removeBtn = document.createElement('button');
+    removeBtn.textContent = 'Remove';
+    removeBtn.classList.add('removeBtn');
+    
+    removeBtn.addEventListener('click', function() {
+        episodesDiv.removeChild(episodeDiv);
+    });
+    
+    episodeDiv.appendChild(episodeInput);
+    episodeDiv.appendChild(removeBtn);
+    
+    episodesDiv.appendChild(episodeDiv);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listener for the Generate Code button
+    document.getElementById('generateBtn').addEventListener('click', function() {
+        // Retrieve input values
+        var thumbnailLink = document.getElementById('thumbnailInput').value;
+        var iframeLink = document.getElementById('iframeInput').value;
+        var synopsis = document.getElementById('synopsisInput').value;
+        var casts = document.getElementById('castsInput').value;
+        var director = document.getElementById('directorInput').value;
+        var release = document.getElementById('releaseInput').value;
+        var country = document.getElementById('countryInput').value;
+
+
+var generatedCode = '<html>\n' +
+    '<img src="' + thumbnailLink + '"/>\n' +
+    '<iframe id="fullscreen-Button" class="lazyload" data-src="' + iframeLink + '" src="' + iframeLink + '" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>\n' +
+    '<p>' + synopsis + '</p>\n' +
+    '<table class="blueTable">\n' +
+    '<tbody>\n' +
+    '<tr>\n<td>Casts:</td>\n<td>' + casts + '</td>\n</tr>\n' +
+    '<tr>\n<td>Director:</td>\n<td>' + director + '</td>\n</tr>\n' +
+    '<tr>\n<td>Release:</td>\n<td>' + release + '</td>\n</tr>\n' +
+    '<tr>\n<td>Country:</td>\n<td>' + country + '</td>\n</tr>\n' +
+    '</tbody>\n' +
+    '</table>\n' +
+    '<a class="watchbtn" href="javascript:void(0);" id="fullscreenButton">Watch Now</a>\n' +
+    '</html>';
+
+
+
+        // Display generated code in the textarea
+        document.getElementById('codeOutput').value = generatedCode;
+    });
+
+    // Add event listener for the Copy button
+    document.getElementById('copyBtn').addEventListener('click', function() {
+        var codeOutput = document.getElementById('codeOutput');
+        codeOutput.select();
+        document.execCommand('copy');
+        alert('Code copied to clipboard!');
+    });
+});
+
+document.getElementById('generateBtn3').addEventListener('click', function() {
+    var seriesThumbnail = document.getElementById('seriesThumbnailInput3').value;
+    var casts = document.getElementById('castsInput3').value;
+    var director = document.getElementById('directorInput3').value;
+    var releaseDate = document.getElementById('releaseInput3').value;
+    var country = document.getElementById('countryInput3').value;
+    var synopsis = document.getElementById('synopsisInput3').value;
+    var episodes = document.querySelectorAll('.episodeInput');
+    
+    var episodeList = '';
+    episodes.forEach(function(episode, index) {
+        episodeList += '<a href="" class="epi" data-src="' + episode.value + '">' + (index + 1) + '</a>';
+    });
+    
+    var tableCode = '<table class="blueTable">\n<tbody>\n';
+    tableCode += '<tr>\n<td>Casts:</td>\n<td>' + casts + '</td>\n</tr>\n';
+    tableCode += '<tr>\n<td>Director:</td>\n<td>' + director + '</td>\n</tr>\n';
+    tableCode += '<tr>\n<td>Release Date:</td>\n<td>' + releaseDate + '</td>\n</tr>\n';
+    tableCode += '<tr>\n<td>Country:</td>\n<td>' + country + '</td>\n</tr>\n';
+    tableCode += '</tbody>\n</table>';
+    
+var generatedCode = `<html>
+${iframeCode}
+<img src="${seriesThumbnail}"/>
+<p>${synopsis}</p>
+<table class="blueTable">
+<tbody>
+<tr>
+<td>Casts:</td> <td>${casts}</td>
+</tr>
+<tr>
+<td>Director:</td> <td>${director}</td>
+</tr>
+<tr>
+<td>Release Date:</td> <td>${releaseDate}</td>
+</tr>
+<tr>
+<td>Country:</td> <td>${country}</td>
+</tr>
+</tbody>
+</table>
+<div id="episodeList">${episodeList}</div>
+</html>`;
+
+   
+    document.getElementById('codeOutput3').value = generatedCode;
+});
+
+document.getElementById('copyBtn3').addEventListener('click', function() {
+    var codeOutput = document.getElementById('codeOutput3');
+    codeOutput.select();
+    document.execCommand('copy');
+    alert('Code copied to clipboard!');
+});
+
+// Function to open a specific tab
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+
+function toggleDropdown() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function selectOption(option) {
+  document.getElementById("myDropdown").classList.remove("show");
+  if (option === "seriesCode") {
+    document.getElementById("seriesCode").style.display = "block";
+    document.getElementById("movieCode").style.display = "none";
+    document.getElementById("dropdownTitle").innerHTML = 'Series Code <i class="fas fa-caret-down"></i>';
+    document.getElementById("postOption").style.display = "none";
+    document.getElementById("movieOption").style.display = "block";
+  } else if (option === "movieCode") {
+    document.getElementById("seriesCode").style.display = "none";
+    document.getElementById("movieCode").style.display = "block";
+    document.getElementById("dropdownTitle").innerHTML = 'Movie Code <i class="fas fa-caret-down"></i>';
+    document.getElementById("movieOption").style.display = "none";
+    document.getElementById("postOption").style.display = "block";
+  }
+}
+// Set default content to "Post Code"
+selectOption("seriesCode");
+
+   //notes code
+function openCodeForm() {
+            document.getElementById('codeForm').style.display = 'flex';
+        }
+function saveCodeBlock() {
+            var title = document.getElementById('codeTitle').value;
+            var code = document.getElementById('codeContent').value;
+            
+            // Retrieve saved code blocks from cookies
+            var cookies = document.cookie.split(';');
+            var updatedCookie = false;
+
+            // Loop through cookies to check if title already exists
+            cookies.forEach(function(cookie) {
+                var parts = cookie.split('=');
+                var cookieTitle = decodeURIComponent(parts[0].trim());
+                if (cookieTitle === title) {
+                    // If title exists, update the existing note
+                    document.cookie = encodeURIComponent(title) + '=' + encodeURIComponent(code) + '; expires=' + new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toUTCString() + '; path=/';
+                    updatedCookie = true;
+                }
+            });
+
+            if (!updatedCookie) {
+                // If title does not exist, add a new note
+                document.cookie = encodeURIComponent(title) + '=' + encodeURIComponent(code) + '; expires=' + new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toUTCString() + '; path=/';
+            }
+
+            // Close the form
+            document.getElementById('codeForm').style.display = 'none';
+
+            // Refresh the saved code blocks
+            displaySavedCodeBlocks();
+        }
+function displaySavedCodeBlocks() {
+    var savedCodeBlocksDiv = document.getElementById('savedCodeBlocks');
+    savedCodeBlocksDiv.innerHTML = ''; // Clear previous content
+
+    // Retrieve saved code blocks from cookies
+    var cookies = document.cookie.split(';').reverse(); // Reverse the array to display newest first
+
+    // Check if there are any saved code blocks
+    if (cookies.length > 0) {
+        cookies.forEach(function(cookie) {
+            var parts = cookie.split('=');
+            if (parts.length === 2) {
+                var title = decodeURIComponent(parts[0].trim());
+                var code = decodeURIComponent(parts[1]);
+                // Encode HTML entities to prevent interpretation
+                var encodedCode = escapeHTML(code);
+
+                // Display code block
+                var codeBlock = document.createElement('div');
+                codeBlock.classList.add('code-block');
+                codeBlock.innerHTML = '<h3>' + title + '</h3><pre><code>' + encodedCode + '</code></pre>';
+
+                // Add copy button
+                var copyBtn = document.createElement('button');
+                copyBtn.classList.add('copy-btn');
+                copyBtn.innerHTML = 'Copy';
+                copyBtn.onclick = function() {
+                    copyToClipboard(code);
+                };
+                codeBlock.appendChild(copyBtn);
+
+                // Add edit button
+                var editBtn = document.createElement('button');
+                editBtn.classList.add('edit-btn');
+                editBtn.textContent = 'Edit';
+                editBtn.onclick = function() {
+                    editCodeBlock(title, code);
+                };
+                codeBlock.appendChild(editBtn);
+                // Add delete button
+                var deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.onclick = function() {
+                    deleteCodeBlock(title);
+                };
+                codeBlock.appendChild(deleteBtn);
+
+                savedCodeBlocksDiv.appendChild(codeBlock);
+            }
+        });
+    }
+}
+// Function to escape HTML entities
+function escapeHTML(html) {
+    return html.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+        function copyToClipboard(text) {
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Code copied to clipboard!');
+        }
+        function editCodeBlock(title, code) {
+            document.getElementById('codeTitle').value = title;
+            document.getElementById('codeContent').value = code;
+            document.getElementById('codeForm').style.display = 'flex';
+        }
+        function deleteCodeBlock(title) {
+            document.cookie = encodeURIComponent(title) + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            displaySavedCodeBlocks();
+        }
+        // Display saved code blocks on page load
+        displaySavedCodeBlocks();
+function copyText() {
+    /* Copy text into clipboard */
+    navigator.clipboard.writeText('<a href="" class="epi" data-src=" "> </a>');
+}
+
+
+// Function to toggle the dashboard sidebar
+function toggleDashboardSidebar() {
+  var sidebar = document.getElementById("dashboardSidebar");
+  var contentAreas = document.querySelectorAll(".content");
+
+  if (sidebar.style.left === "-280px") {
+    sidebar.style.left = "0"; // Slide into view
+    contentAreas.forEach(function(content) {
+      content.classList.add("blur-effect"); // Add blur effect to all content areas
+    });
+  } else {
+    sidebar.style.left = "-280px"; // Slide out of view
+    contentAreas.forEach(function(content) {
+      content.classList.remove("blur-effect"); // Remove blur effect from all content areas
+    });
+  }
+}
+
+// Event listener for the menu button click
+document.getElementById("menuButton").addEventListener("click", toggleDashboardSidebar);
+
+// Function to close sidebar when clicking outside of it
+window.onclick = function(event) {
+  var sidebar = document.getElementById("dashboardSidebar");
+  var menuButton = document.getElementById("menuButton");
+  var contentAreas = document.querySelectorAll(".content");
+
+  if (event.target !== sidebar && event.target !== menuButton) {
+    sidebar.style.left = "-280px"; // Slide out of view
+    contentAreas.forEach(function(content) {
+      content.classList.remove("blur-effect"); // Remove blur effect from all content areas
+    });
+  }
+}
+
+ 
+const searchIcon = document.getElementById("searchIcon");
+const searchBar = document.getElementById("searchBar");
+
+searchIcon.addEventListener("click", function(event) {
+  event.stopPropagation(); // Prevent click event from propagating to document
+  searchBar.classList.toggle("active");
+});
+
+document.getElementById("searchInput").addEventListener("input", function() {
+  const searchValue = this.value.toLowerCase();
+  const gridItems = document.querySelectorAll(".grid-block");
+
+  gridItems.forEach(function(item) {
+    const title = item.querySelector(".description").textContent.toLowerCase();
+    const subtitle = item.querySelector(".author-name").textContent.toLowerCase();
+    const isVisible = title.includes(searchValue) || subtitle.includes(searchValue);
+
+    item.style.display = isVisible ? "block" : "none";
+  });
+});
+
+// Add event listener to the document to collapse search bar when clicked outside
+document.addEventListener("click", function(event) {
+  if (!searchBar.contains(event.target)) {
+    searchBar.classList.remove("active");
+  }
+});
+
+        function showIframe(iframeId, videoUrl) {
+        var container = document.getElementById('iframe-container' + iframeId.charAt(iframeId.length - 1));
+        var iframe = document.getElementById(iframeId);
+        iframe.src = videoUrl;
+        container.style.display = 'flex';
+    }
+
+    function hideIframe(iframeId, event) {
+        if (event.target !== event.currentTarget) return;
+        var container = document.getElementById('iframe-container' + iframeId.charAt(iframeId.length - 1));
+        var iframe = document.getElementById(iframeId);
+        iframe.src = ""; // Stop the video
+        container.style.display = 'none';
+    }
+
+  
+
+    function openTab(evt, tabName) {
+        var i, tabContent, tabLinks;
+        tabContent = document.getElementsByClassName("yt-tools-tab");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        tabLinks = document.getElementsByClassName("yt-tools-tab-link");
+        for (i = 0; i < tabLinks.length; i++) {
+            tabLinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add("active");
+    }
+
+    // Default to the first tab
+    document.getElementsByClassName("yt-tools-tab-link")[0].click();
+
+
+    function convertLink() {
+        var youtubeLink = document.getElementById('yt-tools-youtubeLink').value;
+        var videoId = extractVideoId(youtubeLink);
+        if (videoId) {
+            var embedLink = 'https://www.youtube.com/embed/' + videoId;
+            document.getElementById('yt-tools-embedLink').value = embedLink;
+        } else {
+            alert('Invalid YouTube link. Please enter a valid link.');
+        }
+    }
+
+    function extractVideoId(url) {
+        var videoId;
+        if (url.includes('youtube.com') && url.includes('v=')) {
+            videoId = url.split('v=')[1];
+            var ampersandPosition = videoId.indexOf('&');
+            if (ampersandPosition !== -1) {
+                videoId = videoId.substring(0, ampersandPosition);
+            }
+        } else if (url.includes('youtu.be/')) {
+            videoId = url.split('youtu.be/')[1];
+            var slashPosition = videoId.indexOf('/');
+            if (slashPosition !== -1) {
+                videoId = videoId.substring(0, slashPosition);
+            }
+        }
+        return videoId;
+    }
+
+    function copyEmbedLink() {
+        var embedLink = document.getElementById('yt-tools-embedLink').value;
+        if (embedLink) {
+            navigator.clipboard.writeText(embedLink).then(() => {
+                alert('Embed link copied to clipboard.');
+            }).catch(err => {
+                alert('Failed to copy embed link: ', err);
+            });
+        } else {
+            alert('No embed link to copy.');
+        }
+    }
+
+
+    function copyThumbnailLink() {
+        var thumbnailSrc = document.getElementById('yt-tools-hiddenInput').value;
+        if (thumbnailSrc) {
+            navigator.clipboard.writeText(thumbnailSrc).then(() => {
+                alert('Thumbnail link copied to clipboard.');
+            }).catch(err => {
+                alert('Failed to copy thumbnail link: ', err);
+            });
+        } else {
+            alert('No thumbnail link to copy.');
+        }
+    }
+
+    const urlField = document.getElementById("yt-tools-videoURL");
+    const previewArea = document.querySelector(".yt-tools-preview-area");
+    const imgTag = previewArea.querySelector(".yt-tools-thumbnail");
+    const hiddenInput = document.getElementById("yt-tools-hiddenInput");
+    
+    urlField.onkeyup = () => {
+        let imgURL = urlField.value;
+        previewArea.classList.add("active");
+        if (imgURL.indexOf("https://www.youtube.com/watch?v=") != -1) {
+            let vidId = imgURL.split("v=")[1].substring(0, 11);
+            let ytImgURL = `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
+            imgTag.src = ytImgURL;
+            hiddenInput.value = ytImgURL;
+        } else if (imgURL.indexOf("https://youtu.be/") != -1) {
+            let vidId = imgURL.split("be/")[1].substring(0, 11);
+            let ytImgURL = `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
+            imgTag.src = ytImgURL;
+            hiddenInput.value = ytImgURL;
+        } else if (imgURL.match(/\.(jpe?g|png|gif|bmp|webp)$/i)) {
+            imgTag.src = imgURL;
+            hiddenInput.value = imgURL;
+        } else {
+            imgTag.src = "";
+            hiddenInput.value = "";
+            previewArea.classList.remove("active");
+        }
+    };
+
+     function showFloatingPage(pageId) {
+            var container = document.getElementById(pageId);
+            container.style.display = 'flex';
+        }
+
+        function hideFloatingPage(pageId) {
+            var container = document.getElementById(pageId);
+            container.style.display = 'none';
+        }
+</script>
+</body>
+</html>
