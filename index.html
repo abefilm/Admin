@@ -17,7 +17,7 @@
 
     /* CSS styles */
     :root {
-      --background-color: #f2f2f2;
+      --background-color: #e5e5e5;
       --menu-colorbg:#e1e1e1 ;
       --theme-color:#17c349e3;
       --text-color: #5a5a5a;
@@ -57,178 +57,7 @@
     }
 
         
-            #searchResults {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Grid with 3 columns */
-            gap: 10px;
-        }
-        .postItem {
-           
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative; /* Ensure ribbon tag positioning */
-            display: none; /* Initially hide all items */
-        }
-        .postItem.show {
-            display: block; /* Show items that should be visible */
-        }
-        .postItem:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .postItem a {
-            display: block;
-            color: #fff;
-            text-decoration: none;
-        }
-        .postItem img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 5px 5px 0 0;
-        }
-        .postItem .title {
-            padding: 5px;
-            font-size: 0.8em;
-            color:var(--text-color);
-        }
-        .postItem .title a {
-            font-size: 0.8em;
-        }
-        .ribbon {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            background: hsla(109, 85%, 61%, 1);
-            background: linear-gradient(90deg, hsla(109, 85%, 61%, 1) 0%, hsla(169, 94%, 67%, 1) 100%);
-            background: -moz-linear-gradient(90deg, hsla(109, 85%, 61%, 1) 0%, hsla(169, 94%, 67%, 1) 100%);
-            background: -webkit-linear-gradient(90deg, hsla(109, 85%, 61%, 1) 0%, hsla(169, 94%, 67%, 1) 100%);
-            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#66F047", endColorstr="#5CFADD", GradientType=1);
-            color: #17800e;
-            font-size: 0.6em;
-            padding: 2px 5px;
-            border-radius: 3px;
-        }
-        .latestPosts {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin: 20px 0 0 0;
-            color: var(--text-color);
-        }
-        .viewMore {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .viewMore button {
-            background-color: var(--theme-color);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .viewMore button:hover {
-            background-color: #555;
-        }
-        h2 {
-            color: lightgreen;
-        }
-        #searchInput {
-            width: calc(100% - 40px);
-            margin: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            background-color: #333;
-            color: #fff;
-            font-size: 1em;
-        }
-
-        /* Modal Styles */
-        #modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        #modalContent {
-            background-color: var(--background-color);
-            padding: 20px;
-            border-radius: 5px;
-            width: 100%;
-            height: 100%;
-            overflow-y: auto;
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        #modalClose {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #f30e0e;
-            font-size: 2em;
-            cursor: pointer;
-        }
-        #modalContent img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-        #watchNow {
-            background-color: #18c02f;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 20px;
-        }
-        #watchNow:hover {
-            background-color: #555;
-        }
-
-        .hoverPlay {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px; /* Adjust width */
-            height: 60px; /* Adjust height */
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            display: none;
-        }
-        .hoverPlay::before {
-            content: '\25B6'; /* Unicode for the play button */
-            color: rgba(34, 197, 62, 0.8);
-            font-size: 35px;
-            margin: -5px 0 0 5px;
-        }
-
-        .postItem:hover .hoverPlay {
-            display: flex;
-        }
-        
-        
+    
     body {
       margin: 0;
       padding:0 10px;
@@ -317,9 +146,9 @@ li svg{
 }
 .menu-btn-bar h4{
   position: absolute;
-  top:-23px;
+  top:0;
   color:#1ec963;
-  left:57px;
+  left:60px;
   font-size:18px;
 }
 /* Style for the menu button */
@@ -386,7 +215,7 @@ li svg{
 }
 
 .search-bar.active {
-  width: 165px; /* Adjust width as needed */
+  width: 190px; /* Adjust width as needed */
   opacity: 1;
   outline: none;
   border-radius: 5px;
@@ -801,11 +630,12 @@ pre{
      font-size:15px;
   }
 
-   
-  
+    
+
+    
       .slider {
             width: 100%;
-            margin-top: 70px; /* Add margin at the top */
+            margin-top: 10px; /* Add margin at the top */
             overflow-x: auto !important; /* Ensure horizontal scrolling */
             white-space: nowrap; /* Prevent line breaks */
         }
@@ -816,11 +646,17 @@ pre{
             margin-right: 10px;
             object-fit: cover; /* Ensure images cover their container */
         }
-  
+  .free-space{
+    display:block;
+    height:10px!important;
+    }
+    
    
 </style>
 </head>
 <body>
+  
+
   
   <header class="myheader">
 
@@ -828,8 +664,8 @@ pre{
 <div class="dashboard-sidebar" id="dashboardSidebar">
   <ul>
     <h4>DASHBOARD</h4>
-    <li> <svg fill="#0058db" width="14px" height="14px" viewBox="0 0 512.00 512.00" id="_x30_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke="#2174f1" stroke-width="0.00512"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M418.275,146h-46.667 c-5.365-22.513-12.324-43.213-20.587-61.514c15.786,8.776,30.449,19.797,43.572,32.921C403.463,126.277,411.367,135.854,418.275,146 z M452,256c0,17.108-2.191,33.877-6.414,50h-64.034c1.601-16.172,2.448-32.887,2.448-50s-0.847-33.828-2.448-50h64.034 C449.809,222.123,452,238.892,452,256z M256,452c-5.2,0-21.048-10.221-36.844-41.813c-6.543-13.087-12.158-27.994-16.752-44.187 h107.191c-4.594,16.192-10.208,31.1-16.752,44.187C277.048,441.779,261.2,452,256,452z M190.813,306 c-1.847-16.247-2.813-33.029-2.813-50s0.966-33.753,2.813-50h130.374c1.847,16.247,2.813,33.029,2.813,50s-0.966,33.753-2.813,50 H190.813z M60,256c0-17.108,2.191-33.877,6.414-50h64.034c-1.601,16.172-2.448,32.887-2.448,50s0.847,33.828,2.448,50H66.414 C62.191,289.877,60,273.108,60,256z M256,60c5.2,0,21.048,10.221,36.844,41.813c6.543,13.087,12.158,27.994,16.752,44.187H202.404 c4.594-16.192,10.208-31.1,16.752-44.187C234.952,70.221,250.8,60,256,60z M160.979,84.486c-8.264,18.301-15.222,39-20.587,61.514 H93.725c6.909-10.146,14.812-19.723,23.682-28.593C130.531,104.283,145.193,93.262,160.979,84.486z M93.725,366h46.667 c5.365,22.513,12.324,43.213,20.587,61.514c-15.786-8.776-30.449-19.797-43.572-32.921C108.537,385.723,100.633,376.146,93.725,366z M351.021,427.514c8.264-18.301,15.222-39,20.587-61.514h46.667c-6.909,10.146-14.812,19.723-23.682,28.593 C381.469,407.717,366.807,418.738,351.021,427.514z"></path></g></svg> ABEFILM Website</li>
-    <li><svg width="20px" height="20px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5915 3.88444C13.6002 3.32107 14.7626 3 16 3C17.2374 3 18.3998 3.32107 19.4085 3.88444L20.1464 3.14645C20.3417 2.95118 20.6583 2.95118 20.8536 3.14645C21.0488 3.34171 21.0488 3.65829 20.8536 3.85355L20.2612 4.44595C21.9266 5.72558 23 7.73743 23 10H9C9 7.73743 10.0734 5.72558 11.7388 4.44595L11.1464 3.85355C10.9512 3.65829 10.9512 3.34171 11.1464 3.14645C11.3417 2.95118 11.6583 2.95118 11.8536 3.14645L12.5915 3.88444ZM14 7C14 7.55228 13.5523 8 13 8C12.4477 8 12 7.55228 12 7C12 6.44772 12.4477 6 13 6C13.5523 6 14 6.44772 14 7ZM19 8C19.5523 8 20 7.55228 20 7C20 6.44772 19.5523 6 19 6C18.4477 6 18 6.44772 18 7C18 7.55228 18.4477 8 19 8Z" fill="#87C527"></path> <path d="M5 12.5C5 11.6716 5.67157 11 6.5 11C7.32843 11 8 11.6716 8 12.5V18.5C8 19.3284 7.32843 20 6.5 20C5.67157 20 5 19.3284 5 18.5V12.5Z" fill="#87C527"></path> <path d="M12 24V27.5C12 28.3284 12.6716 29 13.5 29C14.3284 29 15 28.3284 15 27.5V24H17V27.5C17 28.3284 17.6716 29 18.5 29C19.3284 29 20 28.3284 20 27.5V24H21C22.1046 24 23 23.1046 23 22V11H9V22C9 23.1046 9.89543 24 11 24H12Z" fill="#87C527"></path> <path d="M24 12.5C24 11.6716 24.6716 11 25.5 11C26.3284 11 27 11.6716 27 12.5V18.5C27 19.3284 26.3284 20 25.5 20C24.6716 20 24 19.3284 24 18.5V12.5Z" fill="#87C527"></path> </g></svg> ABEFILM Mobile App</li>
+    <li> <svg fill="#0058db" width="14px" height="14px" viewBox="0 0 512.00 512.00" id="_x30_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke="#2174f1" stroke-width="0.00512"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M418.275,146h-46.667 c-5.365-22.513-12.324-43.213-20.587-61.514c15.786,8.776,30.449,19.797,43.572,32.921C403.463,126.277,411.367,135.854,418.275,146 z M452,256c0,17.108-2.191,33.877-6.414,50h-64.034c1.601-16.172,2.448-32.887,2.448-50s-0.847-33.828-2.448-50h64.034 C449.809,222.123,452,238.892,452,256z M256,452c-5.2,0-21.048-10.221-36.844-41.813c-6.543-13.087-12.158-27.994-16.752-44.187 h107.191c-4.594,16.192-10.208,31.1-16.752,44.187C277.048,441.779,261.2,452,256,452z M190.813,306 c-1.847-16.247-2.813-33.029-2.813-50s0.966-33.753,2.813-50h130.374c1.847,16.247,2.813,33.029,2.813,50s-0.966,33.753-2.813,50 H190.813z M60,256c0-17.108,2.191-33.877,6.414-50h64.034c-1.601,16.172-2.448,32.887-2.448,50s0.847,33.828,2.448,50H66.414 C62.191,289.877,60,273.108,60,256z M256,60c5.2,0,21.048,10.221,36.844,41.813c6.543,13.087,12.158,27.994,16.752,44.187H202.404 c4.594-16.192,10.208-31.1,16.752-44.187C234.952,70.221,250.8,60,256,60z M160.979,84.486c-8.264,18.301-15.222,39-20.587,61.514 H93.725c6.909-10.146,14.812-19.723,23.682-28.593C130.531,104.283,145.193,93.262,160.979,84.486z M93.725,366h46.667 c5.365,22.513,12.324,43.213,20.587,61.514c-15.786-8.776-30.449-19.797-43.572-32.921C108.537,385.723,100.633,376.146,93.725,366z M351.021,427.514c8.264-18.301,15.222-39,20.587-61.514h46.667c-6.909,10.146-14.812,19.723-23.682,28.593 C381.469,407.717,366.807,418.738,351.021,427.514z"></path></g></svg> IFILMs Website</li>
+    <li><svg width="20px" height="20px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5915 3.88444C13.6002 3.32107 14.7626 3 16 3C17.2374 3 18.3998 3.32107 19.4085 3.88444L20.1464 3.14645C20.3417 2.95118 20.6583 2.95118 20.8536 3.14645C21.0488 3.34171 21.0488 3.65829 20.8536 3.85355L20.2612 4.44595C21.9266 5.72558 23 7.73743 23 10H9C9 7.73743 10.0734 5.72558 11.7388 4.44595L11.1464 3.85355C10.9512 3.65829 10.9512 3.34171 11.1464 3.14645C11.3417 2.95118 11.6583 2.95118 11.8536 3.14645L12.5915 3.88444ZM14 7C14 7.55228 13.5523 8 13 8C12.4477 8 12 7.55228 12 7C12 6.44772 12.4477 6 13 6C13.5523 6 14 6.44772 14 7ZM19 8C19.5523 8 20 7.55228 20 7C20 6.44772 19.5523 6 19 6C18.4477 6 18 6.44772 18 7C18 7.55228 18.4477 8 19 8Z" fill="#87C527"></path> <path d="M5 12.5C5 11.6716 5.67157 11 6.5 11C7.32843 11 8 11.6716 8 12.5V18.5C8 19.3284 7.32843 20 6.5 20C5.67157 20 5 19.3284 5 18.5V12.5Z" fill="#87C527"></path> <path d="M12 24V27.5C12 28.3284 12.6716 29 13.5 29C14.3284 29 15 28.3284 15 27.5V24H17V27.5C17 28.3284 17.6716 29 18.5 29C19.3284 29 20 28.3284 20 27.5V24H21C22.1046 24 23 23.1046 23 22V11H9V22C9 23.1046 9.89543 24 11 24H12Z" fill="#87C527"></path> <path d="M24 12.5C24 11.6716 24.6716 11 25.5 11C26.3284 11 27 11.6716 27 12.5V18.5C27 19.3284 26.3284 20 25.5 20C24.6716 20 24 19.3284 24 18.5V12.5Z" fill="#87C527"></path> </g></svg> IFILMs Mobile App</li>
     <li><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.58 19.37L17.59 11.01C17.38 10.46 16.91 10.12 16.37 10.12C15.83 10.12 15.37 10.46 15.14 11.03L12.16 19.37C12.02 19.76 12.22 20.19 12.61 20.33C13 20.47 13.43 20.27 13.57 19.88L14.19 18.15H18.54L19.16 19.88C19.27 20.19 19.56 20.38 19.87 20.38C19.95 20.38 20.04 20.37 20.12 20.34C20.51 20.2 20.71 19.77 20.57 19.38L20.58 19.37ZM14.74 16.64L16.38 12.05L18.02 16.64H14.74ZM12.19 7.85C9.92999 11.42 7.89 13.58 5.41 15.02C5.29 15.09 5.16 15.12 5.04 15.12C4.78 15.12 4.53 14.99 4.39 14.75C4.18 14.39 4.3 13.93 4.66 13.73C6.75999 12.51 8.48 10.76 10.41 7.86H4.12C3.71 7.86 3.37 7.52 3.37 7.11C3.37 6.7 3.71 6.36 4.12 6.36H7.87V4.38C7.87 3.97 8.21 3.63 8.62 3.63C9.02999 3.63 9.37 3.97 9.37 4.38V6.36H13.12C13.53 6.36 13.87 6.7 13.87 7.11C13.87 7.52 13.53 7.86 13.12 7.86H12.18L12.19 7.85ZM12.23 15.12C12.1 15.12 11.97 15.09 11.85 15.02C11.2 14.64 10.57 14.22 9.97999 13.78C9.64999 13.53 9.58 13.06 9.83 12.73C10.08 12.4 10.55 12.33 10.88 12.58C11.42 12.99 12.01 13.37 12.61 13.72C12.97 13.93 13.09 14.39 12.88 14.75C12.74 14.99 12.49 15.12 12.23 15.12Z" fill="#e09224"></path> </g></svg> Korean Language</li>
   </ul>
   <ul class="mygroup">
@@ -857,12 +693,14 @@ pre{
   <input type="text" id="searchInput" placeholder="Search...">
 </div>
     
+    
 <div class="toggle-theme" onclick="toggleDarkMode()">
 <svg id="light-icon" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M18 12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12Z" fill="#1C274C"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V3C12.75 3.41421 12.4142 3.75 12 3.75C11.5858 3.75 11.25 3.41421 11.25 3V2C11.25 1.58579 11.5858 1.25 12 1.25ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H3C3.41421 11.25 3.75 11.5858 3.75 12C3.75 12.4142 3.41421 12.75 3 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM20.25 12C20.25 11.5858 20.5858 11.25 21 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H21C20.5858 12.75 20.25 12.4142 20.25 12ZM12 20.25C12.4142 20.25 12.75 20.5858 12.75 21V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V21C11.25 20.5858 11.5858 20.25 12 20.25Z" fill="#1C274C"></path> <g opacity="0.5"> <path d="M4.39838 4.39838C4.69127 4.10549 5.16615 4.10549 5.45904 4.39838L5.85188 4.79122C6.14477 5.08411 6.14477 5.55898 5.85188 5.85188C5.55898 6.14477 5.08411 6.14477 4.79122 5.85188L4.39838 5.45904C4.10549 5.16615 4.10549 4.69127 4.39838 4.39838Z" fill="#1C274C"></path> <path d="M19.6009 4.39864C19.8938 4.69153 19.8938 5.16641 19.6009 5.4593L19.2081 5.85214C18.9152 6.14503 18.4403 6.14503 18.1474 5.85214C17.8545 5.55924 17.8545 5.08437 18.1474 4.79148L18.5402 4.39864C18.8331 4.10575 19.308 4.10575 19.6009 4.39864Z" fill="#1C274C"></path> <path d="M18.1474 18.1474C18.4403 17.8545 18.9152 17.8545 19.2081 18.1474L19.6009 18.5402C19.8938 18.8331 19.8938 19.308 19.6009 19.6009C19.308 19.8938 18.8331 19.8938 18.5402 19.6009L18.1474 19.2081C17.8545 18.9152 17.8545 18.4403 18.1474 18.1474Z" fill="#1C274C"></path> <path d="M5.85188 18.1477C6.14477 18.4406 6.14477 18.9154 5.85188 19.2083L5.45904 19.6012C5.16615 19.8941 4.69127 19.8941 4.39838 19.6012C4.10549 19.3083 4.10549 18.8334 4.39838 18.5405L4.79122 18.1477C5.08411 17.8548 5.55898 17.8548 5.85188 18.1477Z" fill="#1C274C"></path> </g> </g></svg>
 
 <svg id="dark-icon" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19.9001 2.30719C19.7392 1.8976 19.1616 1.8976 19.0007 2.30719L18.5703 3.40247C18.5212 3.52752 18.4226 3.62651 18.298 3.67583L17.2067 4.1078C16.7986 4.26934 16.7986 4.849 17.2067 5.01054L18.298 5.44252C18.4226 5.49184 18.5212 5.59082 18.5703 5.71587L19.0007 6.81115C19.1616 7.22074 19.7392 7.22074 19.9001 6.81116L20.3305 5.71587C20.3796 5.59082 20.4782 5.49184 20.6028 5.44252L21.6941 5.01054C22.1022 4.849 22.1022 4.26934 21.6941 4.1078L20.6028 3.67583C20.4782 3.62651 20.3796 3.52752 20.3305 3.40247L19.9001 2.30719Z" fill="#ffffff"></path> <path d="M16.0328 8.12967C15.8718 7.72009 15.2943 7.72009 15.1333 8.12967L14.9764 8.52902C14.9273 8.65407 14.8287 8.75305 14.7041 8.80237L14.3062 8.95987C13.8981 9.12141 13.8981 9.70107 14.3062 9.86261L14.7041 10.0201C14.8287 10.0694 14.9273 10.1684 14.9764 10.2935L15.1333 10.6928C15.2943 11.1024 15.8718 11.1024 16.0328 10.6928L16.1897 10.2935C16.2388 10.1684 16.3374 10.0694 16.462 10.0201L16.8599 9.86261C17.268 9.70107 17.268 9.12141 16.8599 8.95987L16.462 8.80237C16.3374 8.75305 16.2388 8.65407 16.1897 8.52902L16.0328 8.12967Z" fill="#ffffff"></path> <path opacity="0.5" d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#ffffff"></path> </g></svg>
 </div>
   </header>
+  
    <div class="bottom-menu">
   <button onclick="showContent('home')" class="active">
 <i class="fas fa-home"></i>
@@ -877,7 +715,7 @@ pre{
 
 <div class="content" id="home">
 
-  <div class="free-space"></div>
+    <div class="free-space"></div>
   <div class="slider">
     <div class="slider-container">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTDpAZBVy6WjoloT-fD0kaQ-H_5-in6ZrBoxnbKbhVNrouZYVvXlcxgNIiEDgBx_ENhwrDmJtLHpQPQU8v6e9bENNUqO_xYrCw4Hw73HUy19q2-32m8rhMxLZGNZp7R0GSxgQfwwV0NVkxNC4n4LW7FlJ4ptg9E6F-urXuiwVqZPq9_vuwXzs5ys3x3jg/s2828/Picsart_24-06-02_11-56-00-388.jpg" alt="Slider Image 1">
@@ -886,143 +724,15 @@ pre{
     </div>
 </div>
 
+  
+  
 <section>
+  <div class="head-tag">
+    <h4>Latest Posts<i class="fa-solid fa-chevron-right"></i></h4>
+    
+  </div>
+  
 
-     <div class="latestPosts">Latest Posts</div>
-
-    <div id="searchResults"></div>
-    <div class="viewMore">
-        <button onclick="loadMorePosts()">View More</button>
-    </div>
-  <br>
-    <!-- Modal for displaying post content -->
-    <div id="modal">
-        <button id="modalClose" onclick="closeModal()">&times;</button>
-        <div id="modalContent"></div>
-    </div>
-
-    <script>
-        const apiKey = 'AIzaSyD3MEY4fPjDov7OmJ8KNpkofNSjhPD3kko';
-        const blogId = '3434317895581666633';
-        const maxResults = 50; // Fetching more posts initially for flexibility
-        let allPosts = []; // To store all fetched posts
-
-        function fetchAllPosts() {
-            const url = `https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts?key=${apiKey}&maxResults=${maxResults}`;
-
-            return fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    allPosts = data.items;
-                    renderPosts(allPosts);
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        }
-
-        function getFirstImage(content) {
-            const div = document.createElement('div');
-            div.innerHTML = content;
-            const img = div.querySelector('img');
-            return img ? img.src : '';
-        }
-
-        function renderPosts(items) {
-            const resultsContainer = document.getElementById('searchResults');
-            resultsContainer.innerHTML = ''; // Clear previous results
-
-            items.forEach((item, index) => {
-                const postElement = document.createElement('div');
-                postElement.classList.add('postItem');
-                if (index < 20) {
-                    postElement.classList.add('show'); // Show only the first 20 items initially
-                }
-
-                postElement.innerHTML = `
-                    <div>
-                        <img src="${getFirstImage(item.content)}" alt="Thumbnail">
-                        <div class="title">${item.title}</div>
-                        <div class="hoverPlay"></div> <!-- Play button -->
-                    </div>
-                `;
-
-                // Check if there are labels to display as ribbon
-                if (item.labels && item.labels.length > 0) {
-                    const ribbon = document.createElement('div');
-                    ribbon.classList.add('ribbon');
-                    ribbon.textContent = item.labels[0]; // Show only the first label
-                    postElement.appendChild(ribbon);
-                }
-
-                postElement.addEventListener('click', () => {
-                    setTimeout(() => openModal(item), 500); // Delay opening the modal by 500ms
-                });
-
-                resultsContainer.appendChild(postElement);
-            });
-        }
-
-        function loadMorePosts() {
-            const allPostItems = document.querySelectorAll('.postItem');
-            allPostItems.forEach((item, index) => {
-                if (index >= 20) {
-                    item.classList.add('show'); // Show items beyond the initial 20 when "View More" is clicked
-                }
-            });
-        }
-
-        function filterPosts(query) {
-            const filteredPosts = allPosts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
-            renderPosts(filteredPosts);
-        }
-
-        document.getElementById('searchInput').addEventListener('input', (event) => {
-            const query = event.target.value;
-            filterPosts(query);
-        });
-
-        function openModal(post) {
-            const modal = document.getElementById('modal');
-            const modalContent = document.getElementById('modalContent');
-
-            const div = document.createElement('div');
-            div.innerHTML = post.content;
-            const images = div.querySelectorAll('img');
-            const iframes = div.querySelectorAll('iframe');
-            const watchBtns = div.querySelectorAll('.watchbtn');
-            const epiLinks = div.querySelectorAll('a.epi'); // Select all <a> elements with class 'epi'
-
-            images.forEach(img => img.remove());
-            iframes.forEach(iframe => iframe.remove());
-            watchBtns.forEach(btn => btn.remove());
-            epiLinks.forEach(link => link.remove()); // Remove all <a> elements with class 'epi'
-
-            const firstImageSrc = getFirstImage(post.content);
-
-            modalContent.innerHTML = `
-                <h2>${post.title}</h2>
-                <img src="${firstImageSrc}" alt="Thumbnail">
-                <div>${div.innerHTML}</div>
-                <a id="watchNow" href="${post.url}" target="_blank">Watch Now</a>
-            `;
-
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.style.display = 'none';
-        }
-
-        // Initial load of all posts when the page loads
-        fetchAllPosts();
-    </script>
 
  
 </section>
@@ -1610,117 +1320,6 @@ document.addEventListener("click", function(event) {
 
   
 
-    function openTab(evt, tabName) {
-        var i, tabContent, tabLinks;
-        tabContent = document.getElementsByClassName("yt-tools-tab");
-        for (i = 0; i < tabContent.length; i++) {
-            tabContent[i].style.display = "none";
-        }
-        tabLinks = document.getElementsByClassName("yt-tools-tab-link");
-        for (i = 0; i < tabLinks.length; i++) {
-            tabLinks[i].classList.remove("active");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.classList.add("active");
-    }
-
-    // Default to the first tab
-    document.getElementsByClassName("yt-tools-tab-link")[0].click();
-
-
-    function convertLink() {
-        var youtubeLink = document.getElementById('yt-tools-youtubeLink').value;
-        var videoId = extractVideoId(youtubeLink);
-        if (videoId) {
-            var embedLink = 'https://www.youtube.com/embed/' + videoId;
-            document.getElementById('yt-tools-embedLink').value = embedLink;
-        } else {
-            alert('Invalid YouTube link. Please enter a valid link.');
-        }
-    }
-
-    function extractVideoId(url) {
-        var videoId;
-        if (url.includes('youtube.com') && url.includes('v=')) {
-            videoId = url.split('v=')[1];
-            var ampersandPosition = videoId.indexOf('&');
-            if (ampersandPosition !== -1) {
-                videoId = videoId.substring(0, ampersandPosition);
-            }
-        } else if (url.includes('youtu.be/')) {
-            videoId = url.split('youtu.be/')[1];
-            var slashPosition = videoId.indexOf('/');
-            if (slashPosition !== -1) {
-                videoId = videoId.substring(0, slashPosition);
-            }
-        }
-        return videoId;
-    }
-
-    function copyEmbedLink() {
-        var embedLink = document.getElementById('yt-tools-embedLink').value;
-        if (embedLink) {
-            navigator.clipboard.writeText(embedLink).then(() => {
-                alert('Embed link copied to clipboard.');
-            }).catch(err => {
-                alert('Failed to copy embed link: ', err);
-            });
-        } else {
-            alert('No embed link to copy.');
-        }
-    }
-
-
-    function copyThumbnailLink() {
-        var thumbnailSrc = document.getElementById('yt-tools-hiddenInput').value;
-        if (thumbnailSrc) {
-            navigator.clipboard.writeText(thumbnailSrc).then(() => {
-                alert('Thumbnail link copied to clipboard.');
-            }).catch(err => {
-                alert('Failed to copy thumbnail link: ', err);
-            });
-        } else {
-            alert('No thumbnail link to copy.');
-        }
-    }
-
-    const urlField = document.getElementById("yt-tools-videoURL");
-    const previewArea = document.querySelector(".yt-tools-preview-area");
-    const imgTag = previewArea.querySelector(".yt-tools-thumbnail");
-    const hiddenInput = document.getElementById("yt-tools-hiddenInput");
-    
-    urlField.onkeyup = () => {
-        let imgURL = urlField.value;
-        previewArea.classList.add("active");
-        if (imgURL.indexOf("https://www.youtube.com/watch?v=") != -1) {
-            let vidId = imgURL.split("v=")[1].substring(0, 11);
-            let ytImgURL = `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
-            imgTag.src = ytImgURL;
-            hiddenInput.value = ytImgURL;
-        } else if (imgURL.indexOf("https://youtu.be/") != -1) {
-            let vidId = imgURL.split("be/")[1].substring(0, 11);
-            let ytImgURL = `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
-            imgTag.src = ytImgURL;
-            hiddenInput.value = ytImgURL;
-        } else if (imgURL.match(/\.(jpe?g|png|gif|bmp|webp)$/i)) {
-            imgTag.src = imgURL;
-            hiddenInput.value = imgURL;
-        } else {
-            imgTag.src = "";
-            hiddenInput.value = "";
-            previewArea.classList.remove("active");
-        }
-    };
-
-     function showFloatingPage(pageId) {
-            var container = document.getElementById(pageId);
-            container.style.display = 'flex';
-        }
-
-        function hideFloatingPage(pageId) {
-            var container = document.getElementById(pageId);
-            container.style.display = 'none';
-        }
 </script>
 </body>
 </html>
