@@ -17,8 +17,8 @@
 
     /* CSS styles */
     :root {
-      --background-color: #e5e5e5;
-      --menu-colorbg:#e1e1e1 ;
+      --background-color: #ffffff;
+      --menu-colorbg:#fff ;
       --theme-color:#17c349e3;
       --text-color: #5a5a5a;
       --button-background-color: #17c349e3;
@@ -34,6 +34,7 @@
       --border-color:#e3e3e3;
       --copy-color:#c2c2c2;
       --blog-border:rgba(128,128,128,1);
+     --light-color:#6e6e6e;
     }
 
     /* Dark mode */
@@ -54,6 +55,7 @@
       --border-color:#272727;
       --copy-color:#4c4c4c;
       --blog-border:rgba(235,235,235,0.8);
+      --light-color:#b1b1b1;
     }
 
         
@@ -615,13 +617,11 @@ pre{
   
 }
 
- 
-
     .head-tag {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 30px 10px 20px 10px;
+        margin: 00px 10px 0px 10px;
       
      
     }
@@ -651,7 +651,74 @@ pre{
     height:10px!important;
     }
     
+
    
+       
+    .rss-feed{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .feed-item {
+            background-color: var(--background-color);
+            border-radius: 10px;
+            overflow: hidden;
+            width: calc(100% / 3 - 20px);
+box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            position: relative;
+           border: solid 1px var(--border-color);
+           padding:0;
+        }
+        
+        .feed-item iframe {
+            width: 100%;
+            height: 180px;
+            border: none;
+            padding:0;
+            margin:0;
+            border-radius:10px 10px 0 0;
+        }
+        .feed-item-content {
+            padding: 10px;
+        }
+        .feed-item-title {
+            font-size: 16px;
+            margin: 0;
+            color:var(--text-color)!important;
+        }
+        .feed-item-meta {
+            display: flex;
+            align-items: center;
+            color: #bbbbbb; /* Darker shade for the author and date */
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .feed-item-author {
+            display: flex;
+            align-items: center;
+            color:var(--light-color);
+        }
+        .feed-item-author img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .feed-item-published {
+            margin-left: auto;
+color:var(--light-color);
+        }
+        @media (max-width: 768px) {
+            .feed-item {
+                width: calc(100% / 2 - 20px); }
+        }
+        @media (max-width: 480px) {
+            .feed-item {
+                width: 100%;
+            }
+        }
+ 
+
 </style>
 </head>
 <body>
@@ -728,9 +795,82 @@ pre{
   
 <section>
   <div class="head-tag">
-    <h4>Latest Posts<i class="fa-solid fa-chevron-right"></i></h4>
-    
+    <h4>Latest Trailer<i class="fa-solid fa-chevron-right"></i></h4>
   </div>
+    <div id="rss-feed" class="rss-feed"></div>
+
+    <script>
+        const API_URL = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fwww.youtube.com%2Ffeeds%2Fvideos.xml%3Fchannel_id%3DUCWOA1ZGywLbqmigxE4Qlvuw&api_key=ikp4mszjsvkzyjwttghnc3nzkuzq1pmwdw602cde&order_by=pubDate&order_dir=desc&count=99';
+        const authorImage = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKwFvbQ-9PB5gCKkUGK6RBe83h69HYDZ9mMBclNkDPRjoxNcywQvrXH9KwpnzyQxsMJ8m58zjF3wusgrdAHM5LS0QxxUe2XfRgtwnCCnZSOTderJxJmXe9XN8v7y1UNEhylSHWtsYGF-p8tBiHMMwpIKUG4r6SchmVneEk5RVicWBR-J8/s220/play%20(4).png';
+        const authorName = 'ABEFLIX';
+
+        async function fetchRSSFeed(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            } catch (error) {
+                console.error('Error fetching the RSS feed:', error);
+            }
+        }
+
+        function displayFeed(items) {
+            const feedContainer = document.getElementById('rss-feed');
+            if (!items) {
+                feedContainer.innerHTML = '<p>Error loading feed. Please try again later.</p>';
+                return;
+            }
+
+            items.forEach(item => {
+                const title = item.title;
+                const link = item.link;
+                const published = item.pubDate;
+                const videoId = link.split('v=')[1];
+
+                const feedItem = document.createElement('div');
+                feedItem.classList.add('feed-item');
+
+                const embed = document.createElement('iframe');
+                embed.src = `https://www.youtube.com/embed/${videoId}`;
+                embed.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                embed.allowFullscreen = true;
+
+                const feedItemContent = document.createElement('div');
+                feedItemContent.classList.add('feed-item-content');
+
+                const feedItemTitle = document.createElement('h2');
+                feedItemTitle.classList.add('feed-item-title');
+                feedItemTitle.textContent = title;
+
+                const feedItemMeta = document.createElement('div');
+                feedItemMeta.classList.add('feed-item-meta');
+
+                const feedItemAuthor = document.createElement('div');
+                feedItemAuthor.classList.add('feed-item-author');
+                feedItemAuthor.innerHTML = `<img src="${authorImage}" alt="${authorName}"> ${authorName}`;
+
+                const feedItemPublished = document.createElement('p');
+                feedItemPublished.classList.add('feed-item-published');
+                feedItemPublished.textContent = new Date(published).toLocaleDateString();
+
+                feedItemMeta.appendChild(feedItemAuthor);
+                feedItemMeta.appendChild(feedItemPublished);
+
+                feedItem.appendChild(embed);
+                feedItemContent.appendChild(feedItemTitle);
+                feedItemContent.appendChild(feedItemMeta);
+                feedItem.appendChild(feedItemContent);
+                feedContainer.appendChild(feedItem);
+            });
+        }
+
+        fetchRSSFeed(API_URL).then(data => {
+            displayFeed(data.items);
+        });
+    </script>
+
   
 
 
